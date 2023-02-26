@@ -42,6 +42,8 @@ Write your code using grouping in the chunks below to help answer the following 
 
 1)  How many members in the dataset favor impeachment vs. not (using the `for_impeachment` column)?
 
+- I first called the dataset and used the pipe operator (from the tidyverse package) to attach the group_by() command. I then grouped by the for_impeachment column and piped to the summarize() command. I included the n() argument to count the number of those favoring/not favoring impeachment and assigned it to a value called 'count'. 26 members in the dataset did not favor impeachment, and 209 members did favor impeachment. 
+
 ```{r}
 
 impeach %>%
@@ -56,6 +58,9 @@ impeach %>%
 2)  Similar to #1 above, using grouping to now break down the Democratic House members by TWO measures: those who are for or against impeachment (as you did above)....and then districts above/below national GDP.  
   
 You'll want to ensure you do the grouping on both columns together, e.g. `group_by(column1, column2)`
+
+- I first called the dataset and used the pipe operator (from the tidyverse package) to attach the group_by() command. I then grouped by the for_impeachment column and gdp_above_national and piped to the summarize() command. I included the n() argument to count the number of those favoring/not favoring impeachment and those with GDPs above or below the national average. Then, I assigned it to a value called 'count'. 
+- 7 members with a GDP above the national were against impeachment, 19 members with a GDP below the national were against impeachment, 126 members with a GDP above the national were for impeachment, and 83 members with a GDP below the national were for impeachment. 
 
 ```{r}
 
@@ -76,6 +81,9 @@ impeach %>%
 
 3)  Now do the same as #2, but this time instead of GDP, group by whether the district is above or below the national average for the percentage of college graduates. The column that captures this information is `pct_bachelors_compared_to_national`.
 
+- I first called the dataset and used the pipe operator (from the tidyverse package) to attach the group_by() command. I then grouped by the for_impeachment column and pct_bachelors_compared_to_national and piped to the summarize() command. I included the n() argument to count the number of those favoring/not favoring impeachment and those above/below the national average percentage of college graduates. Then, I assigned it to a value called 'count'. 
+- 7 members had a percentage of college graduates above the national average and were against impeachment. 19 members had a percentage of college graduates below the national average and were against impeachment. 128 members had a percentage of college graduates above the national average and were for impeachment. 81 members had a percentage of college graduates below the national average and were for impeachment. 
+
 ```{r}
 
 impeach %>%
@@ -92,10 +100,13 @@ impeach %>%
 ```
 
 4)  Let's look at the college graduation comparison in a slightly different way.  
-  
+
 Instead of counting how many districts are above/below the national average, this time summarize by the MEAN percentage of college grads (located in the column `pct_bachelors`) for districts that are Yes for impeachment vs. No.  
   
 In other words, you want to end up with the calculated mean for what that percentage is for the Yes districts and the No districts.
+
+- I first called the dataset and used the pipe operator (from the tidyverse package) to attach the group_by() command. I then grouped by the for_impeachment column and piped to the summarize() command. I included the mean() function to calculate the mean percent who have graduated for those both for/against impeachment. Then, I assigned it to a value called 'mean_pct_bachelors'. 
+-  For those against impeachment, their districts have an average of 27.65% for the college graduation rate. Among those for impeachment, their districts have an average of 33.69% for the college graduation rate. 
 
 ```{r}
 
@@ -108,12 +119,13 @@ impeach %>%
 
 
 
-
-
 ```
 
 5)  Do the same as #4, but this time show the MEAN *percentage of the vote that Donald Trump received* for districts that are Yes for impeachment vs. No.  
 The relevant column for that is `trump_percent`.
+
+- I first called the dataset and used the pipe operator (from the tidyverse package) to attach the group_by() command. I then grouped by the for_impeachment column and piped to the summarize() command. I included the mean() function to calculate the mean percent who voted for Trump. Then, I assigned it to a value called 'mean_trump_percent'. 
+-  For those against impeachment, an average of 43.82% voted for Trump. For those supporting impeachment, an average of 32.04% voted for Trump. 
 
 ```{r}
 
@@ -133,6 +145,9 @@ impeach %>%
 
 6)  Filter out only the members who are a yes for impeachment. Then of those "Yes" member, how many won their 2018 election by less than 5 percentage points (`margin_flag_2018`) vs. more?
 
+- I first called the dataset and used the pipe operator (from the tidyverse package) to attach the filter() command and filter by for_impeachment=='YES'. Then, I piped to the group_by() command. I then grouped by the margin_flag_2018 column and piped to the summarize() command. I included the n() function to calculate the number who won their election less than 5 points or more than 5 points. Then, I assigned it to a value called 'count'. 
+-  Among those for impeachment, 17 members won their 2018 election by 5 or less than 5 percentage points. 192 won by more than 5 percentage points. 
+
 ```{r}
 
 impeach %>%
@@ -149,6 +164,9 @@ impeach %>%
 ```
 
 7)  Come up with another breakdown of your choosing for how you'd like to examine this dataset. Say what you'll look at, and then put the code below to find the answer.
+
+- I chose to see how the average median income varied for those members supporting impeachment versus against impeachment. I first called the dataset and used the pipe operator (from the tidyverse package) to attach the group_by() command. I then grouped by the for_impeachment column and piped to the summarize() command. I included the mean() function to calculate the average median income for both groups. Then, I assigned it to a value called 'avg_median_income'. 
+- The results show that members against impeachment come from districts that have a combined average median income of $53,711.36, while those for impeachment come from districts that have an average median income of $62,107.18. This shows that those for impeachment may come from districts with higher median incomes. 
 
 ```{r}
 
@@ -167,6 +185,8 @@ impeach %>%
 8)  You'll see a column in the table called date_announced. For members who came out as a Yes for impeachment, this is the date they announced their support for it.  
   
 Use the mutate() function to create two new columns: one that extracts the year from date_announced, and a second that extracts the month.
+
+- I set the dataset impeach equal to the mutate step so the dataset would update with the new columns. To extract the year, I created a column called year_announced and used the year() function to extract the year from the date_announced column. Then, I created a column called month_announced and used the month() function to extract the month from the date_announced column. 
 
 ```{r}
 
@@ -187,16 +207,23 @@ impeach = impeach %>%
 
 9) Using the new columns you created in #8, use grouping to count up how many House Democrats during each month announced their support of impeachment.
 
+- I first called the dataset and used the pipe operator (from the tidyverse package) to attach the filter() command, and I filtered by those who supported impeachment. Then, I piped to the group_by() command. I then grouped by the newly created month_announced column and piped to the summarize() command. I included the n() function to calculate the amount who announced their support for impeachment in each month. Then, I assigned it to a value called 'count'. 
+-  For those supporting impeachment, the results are as follows:
+   - 3 announced their support in January
+   - 7 announced their support in April
+   - 39 announced their support in May
+   - 27 announced their support in June
+   - 33 announced their support in July
+   - 18 announced their support in August
+   - 76 announced their support in September
+   - 2 announced their support in November
+   - 4 announced their support in December
 ```{r}
 
 impeach %>%
+  filter(for_impeachment=='YES') %>%
   group_by(month_announced) %>%
   summarize(count = n())
-
-
-
-
-
 
 
 ```
